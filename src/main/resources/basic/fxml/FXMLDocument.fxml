@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<GridPane alignment="CENTER" hgap="10.0" styleClass="root" vgap="10.0" xmlns="http://javafx.com/javafx/8"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.basic.fxml.FXMLDocumentController">
+    <padding>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+    </padding>
+    <children>
+        <Text id="welcome-text" text="Welcome to JavaFX 8" GridPane.columnIndex="0" GridPane.columnSpan="2"
+              GridPane.rowIndex="0"/>
+        <Label text="User Name:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="textfield"/>
+        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <HBox alignment="BOTTOM_RIGHT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <children>
+                <Button fx:id="button" text="Login" onAction="#handleButtonAction"/>
+            </children>
+        </HBox>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints/>
+        <ColumnConstraints/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+    </rowConstraints>
+</GridPane>
