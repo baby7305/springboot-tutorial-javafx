@@ -45,16 +45,22 @@ public class AnchorPaneDemo extends Application {
         // Define AnchorPane
         AnchorPane anchorpane = new AnchorPane();
 
+        // Set the Layout Pane of Scene
+        Scene scene = new Scene(anchorpane);
+        // Read the content of CSS file
+        scene.getStylesheets().add(getClass().getResource("/layoutPane/LayoutPane.css").toString());
+
+        // Set the CSS styling for AnchorPane
+        anchorpane.getStyleClass().add("pane");
+
         // Add all components to Anchor Pane
         anchorpane.getChildren().addAll(button1, button2, button3, button4);
 
-        // Set the Layout Pane of Scene
-        Scene scene = new Scene(anchorpane);
         primaryStage.setScene(scene);
         // Set the title of Stage
-        primaryStage.setTitle("Anchor Pane Demo");
+        primaryStage.setTitle("Anchor Pane with CSS Demo");
         // Set the width of Stage
-        primaryStage.setWidth(300);
+        primaryStage.setWidth(250);
         // Set the height of Stage
         primaryStage.setHeight(250);
         primaryStage.setResizable(true);

@@ -1,11 +1,9 @@
 package com.example.gui.layoutPane;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
@@ -17,42 +15,33 @@ public class FlowPaneDemo extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        // Define Button
-        Button button1 = new Button("OK");
-        button1.setPrefSize(60, 20);
-
-        Button button2 = new Button("Cancel");
-        button2.setPrefSize(60, 20);
-
-        Button button3 = new Button("Yes");
-        button3.setPrefSize(60, 20);
-
-        Button button4 = new Button("No");
-        button4.setPrefSize(60, 20);
-
         // Define FlowPane
-        FlowPane flowpane = new FlowPane(Orientation.VERTICAL);
-        // Set the alighment for FlowPane
-        flowpane.setAlignment(Pos.CENTER);
-        // Set the top, right, bottom, left padding around the FlowPane
-        flowpane.setPadding(new Insets(5, 0, 5, 0));
-        // Set Hgap for FlowPane
-        flowpane.setHgap(5);
-        // Set Vgap for FlowPane
-        flowpane.setVgap(5);
-
-        // Add Button to FlowPane
-        flowpane.getChildren().addAll(button1, button2, button3, button4);
+        FlowPane flowpane = new FlowPane();
 
         // Set the Layout Pane of Scene
         Scene scene = new Scene(flowpane);
 
+        // Read the content of CSS file
+        scene.getStylesheets().add(getClass().getResource("/layoutPane/LayoutPane.css").toString());
+
+        // Set the CSS styling for FlowPane
+        flowpane.getStyleClass().addAll("pane", "flowpane");
+
+        ImageView images[] = new ImageView[8];
+
+        for (int i = 0; i < 8; i++) {
+            images[i] = new ImageView(new Image(getClass().getResourceAsStream("/layoutPane/images/duke" + i + ".gif")));
+
+            // Add ImageView objects to TilePane
+            flowpane.getChildren().add(images[i]);
+        }
+
         // Set the title of Stage
-        primaryStage.setTitle("Flow Pane Demo");
+        primaryStage.setTitle("Flow Pane with CSS Demo");
         // Set the width of Stage
-        primaryStage.setWidth(250);
+        primaryStage.setWidth(340);
         // Set the height of Stage
-        primaryStage.setHeight(200);
+        primaryStage.setHeight(260);
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
 

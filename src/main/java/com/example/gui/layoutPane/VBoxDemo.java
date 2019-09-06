@@ -3,7 +3,6 @@ package com.example.gui.layoutPane;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -34,8 +33,15 @@ public class VBoxDemo extends Application {
 
         // Define VBox
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10, 10, 10, 10));
-        vbox.setSpacing(10);
+
+        // Set the Layout Pane of Scene
+        Scene scene = new Scene(vbox);
+
+        // Read the content of CSS file
+        scene.getStylesheets().add(getClass().getResource("/layoutPane/LayoutPane.css").toString());
+
+        // Set the CSS styling for HBox
+        vbox.getStyleClass().addAll("pane", "vbox");
 
         // Sets the Vertical grow priority to ALWAYS
         VBox.setVgrow(list, Priority.ALWAYS);
@@ -43,11 +49,8 @@ public class VBoxDemo extends Application {
         // Add components to VBox
         vbox.getChildren().addAll(label, list);
 
-        // Set the Layout Pane of Scene
-        Scene scene = new Scene(vbox);
-
         // Set the title of Stage
-        primaryStage.setTitle("VBox Demo");
+        primaryStage.setTitle("VBox with CSS Demo");
         // Set the width of Stage
         primaryStage.setWidth(250);
         // Set the height of Stage

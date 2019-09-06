@@ -33,6 +33,16 @@ public class BorderPaneDemo extends Application {
 
         // Define BorderPane
         BorderPane borderpane = new BorderPane();
+
+        // Set the Layout Pane of Scene
+        Scene scene = new Scene(borderpane);
+
+        // Read the content of CSS file
+        scene.getStylesheets().add(getClass().getResource("/layoutPane/LayoutPane.css").toString());
+
+        // Set the CSS styling for BorderPane
+        borderpane.getStyleClass().add("pane");
+
         borderpane.setTop(button1);
         borderpane.setBottom(button2);
         borderpane.setLeft(button3);
@@ -46,10 +56,8 @@ public class BorderPaneDemo extends Application {
         BorderPane.setAlignment(button4, Pos.CENTER);
         BorderPane.setAlignment(button5, Pos.CENTER);
 
-        // Set the Layout Pane of Scene
-        Scene scene = new Scene(borderpane);
         // Set the title of Stage
-        primaryStage.setTitle("Border Pane Demo");
+        primaryStage.setTitle("Border Pane with CSS Demo");
         // Set the width of Stage
         primaryStage.setWidth(250);
         // Set the height of Stage

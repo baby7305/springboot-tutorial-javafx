@@ -1,7 +1,6 @@
 package com.example.gui.layoutPane;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,8 +26,15 @@ public class HBoxDemo extends Application {
 
         // Define HBox
         HBox hbox = new HBox();
-        hbox.setPadding(new Insets(20, 10, 10, 10));
-        hbox.setSpacing(10);
+
+        // Set the Layout Pane of Scene
+        Scene scene = new Scene(hbox);
+
+        // Read the content of CSS file
+        scene.getStylesheets().add(getClass().getResource("/layoutPane/LayoutPane.css").toString());
+
+        // Set the CSS styling for HBox
+        hbox.getStyleClass().addAll("pane", "hbox");
 
         // Sets the horizontal grow priority to ALWAYS
         HBox.setHgrow(txtURL, Priority.ALWAYS);
@@ -36,10 +42,8 @@ public class HBoxDemo extends Application {
         // Add all components to HBox
         hbox.getChildren().addAll(lblURL, txtURL, btnGo);
 
-        // Set the Layout Pane of Scene
-        Scene scene = new Scene(hbox);
         // Set the title of Stage
-        primaryStage.setTitle("HBox Demo");
+        primaryStage.setTitle("HBox with CSS Demo");
         // Set the width of Stage
         primaryStage.setWidth(300);
         // Set the height of Stage

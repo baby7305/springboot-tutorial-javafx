@@ -1,0 +1,55 @@
+.pane {
+  -fx-background-color: #abffff;
+  -fx-background-image: url("images/JavaFX.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+}
+
+.flowpane {
+  -fx-padding: 5.0 5.0 5.0 5.0;
+  -fx-hgap: 5;
+  -fx-vgap: 5;
+  -fx-alignment: center;
+}
+
+.gridpane {
+  -fx-alignment: center;
+  -fx-background-color: green;
+  -fx-background-radius: 5.0;
+  -fx-background-insets: 0.0 5.0 0.0 5.0;
+  -fx-padding: 10;
+  -fx-hgap: 10;
+  -fx-vgap: 10;
+}
+
+.hbox {
+  -fx-border-color: #2e8b57;
+  -fx-border-width: 2px;
+  -fx-background-color: #ffffff;
+  -fx-padding: 10;
+  -fx-spacing: 10;
+}
+
+.stackpane {
+  -fx-padding: 10.0 10.0 10.0 10.0;
+  -fx-alignment: center;
+}
+
+.tilepane {
+  -fx-alignment: center;
+  -fx-background-color: green;
+  -fx-background-insets: 0.0 5.0 0.0 5.0;
+  -fx-padding: 10;
+  -fx-hgap: 10;
+  -fx-vgap: 10;
+  -fx-pref-columns: 5;
+  -fx-pref-rows: 5;
+}
+
+.vbox {
+  -fx-border-color: #2e8b57;
+  -fx-border-width: 2px;
+  -fx-background-color: #ffffff;
+  -fx-padding: 10;
+  -fx-spacing: 10;
+}

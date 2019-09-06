@@ -1,7 +1,6 @@
 package com.example.gui.layoutPane;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -19,10 +18,15 @@ public class TilePaneDemo extends Application {
     public void start(Stage primaryStage) {
 
         TilePane tilepane = new TilePane(Orientation.VERTICAL);
-        tilepane.setPadding(new Insets(10, 10, 10, 10));
-        tilepane.setHgap(5);
-        tilepane.setVgap(5);
-        tilepane.setPrefRows(4);
+
+        // Set the Layout Pane of Scene
+        Scene scene = new Scene(tilepane);
+
+        // Read the content of CSS file
+        scene.getStylesheets().add(getClass().getResource("/layoutPane/LayoutPane.css").toString());
+
+        // Set the CSS styling for StackPane
+        tilepane.getStyleClass().addAll("pane", "tilepane");
 
         ImageView images[] = new ImageView[8];
 
@@ -33,11 +37,8 @@ public class TilePaneDemo extends Application {
             tilepane.getChildren().add(images[i]);
         }
 
-        // Set the Layout Pane of Scene
-        Scene scene = new Scene(tilepane);
-
         // Set the title of Stage
-        primaryStage.setTitle("Tile Pane Demo");
+        primaryStage.setTitle("Tile Pane with CSS Demo");
         // Set the width of Stage
         primaryStage.setWidth(340);
         // Set the height of Stage

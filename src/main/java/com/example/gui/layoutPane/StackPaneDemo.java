@@ -3,7 +3,6 @@ package com.example.gui.layoutPane;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -36,15 +35,21 @@ public class StackPaneDemo extends Application {
         ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/layoutPane/images/dukeWave.gif")));
 
         StackPane stackpane = new StackPane();
-        stackpane.setPadding(new Insets(10, 10, 10, 10));
+
+        // Set the Layout Pane of Scene
+        Scene scene = new Scene(stackpane);
+
+        // Read the content of CSS file
+        scene.getStylesheets().add(getClass().getResource("/layoutPane/LayoutPane.css").toString());
+
+        // Set the CSS styling for StackPane
+        stackpane.getStyleClass().addAll("pane", "stackpane");
 
         // Add all components to Stack Pane
         stackpane.getChildren().addAll(list, label, image);
 
-        // Set the Layout Pane of Scene
-        Scene scene = new Scene(stackpane);
         // Set the title of Stage
-        primaryStage.setTitle("Stack Pane Demo");
+        primaryStage.setTitle("Stack Pane with CSS Demo");
         // Set the width of Stage
         primaryStage.setWidth(250);
         // Set the height of Stage

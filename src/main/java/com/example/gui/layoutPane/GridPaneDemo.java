@@ -1,8 +1,6 @@
 package com.example.gui.layoutPane;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -17,13 +15,16 @@ public class GridPaneDemo extends Application {
     public void start(Stage primaryStage) {
 
         GridPane gridpane = new GridPane();
-
-        gridpane.setAlignment(Pos.CENTER);
-        gridpane.setHgap(10);
-        gridpane.setVgap(10);
-        gridpane.setPadding(new Insets(10, 10, 10, 10));
-
         gridpane.setGridLinesVisible(true);
+
+        // Set the Layout Pane of Scene
+        Scene scene = new Scene(gridpane);
+
+        // Read the content of CSS file
+        scene.getStylesheets().add(getClass().getResource("/layoutPane/LayoutPane.css").toString());
+
+        // Set the CSS styling for GridPane
+        gridpane.getStyleClass().addAll("pane", "gridpane");
 
         final int column = 3;
         final int row = 4;
@@ -70,10 +71,8 @@ public class GridPaneDemo extends Application {
         // Start at (2, 2) and rowspan = 2
         gridpane.add(button[2][2], 2, 2, 1, 2);
 
-        // Set the Layout Pane of Scene
-        Scene scene = new Scene(gridpane);
         // Set the title of Stage
-        primaryStage.setTitle("Grid Pane Demo");
+        primaryStage.setTitle("Grid Pane with CSS Demo");
         // Set the width of Stage
         primaryStage.setWidth(250);
         // Set the height of Stage
