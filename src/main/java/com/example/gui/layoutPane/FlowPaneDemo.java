@@ -1,6 +1,9 @@
 package com.example.gui.layoutPane;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
@@ -28,7 +31,11 @@ public class FlowPaneDemo extends Application {
         button4.setPrefSize(60, 20);
 
         // Define FlowPane
-        FlowPane flowpane = new FlowPane();
+        FlowPane flowpane = new FlowPane(Orientation.VERTICAL);
+        // Set the alighment for FlowPane
+        flowpane.setAlignment(Pos.CENTER);
+        // Set the top, right, bottom, left padding around the FlowPane
+        flowpane.setPadding(new Insets(5, 0, 5, 0));
         // Set Hgap for FlowPane
         flowpane.setHgap(5);
         // Set Vgap for FlowPane
@@ -43,9 +50,9 @@ public class FlowPaneDemo extends Application {
         // Set the title of Stage
         primaryStage.setTitle("Flow Pane Demo");
         // Set the width of Stage
-        primaryStage.setWidth(300);
+        primaryStage.setWidth(250);
         // Set the height of Stage
-        primaryStage.setHeight(150);
+        primaryStage.setHeight(200);
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
 
