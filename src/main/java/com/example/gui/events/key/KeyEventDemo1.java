@@ -37,74 +37,13 @@ public class KeyEventDemo1 extends Application {
         stage = primaryStage;
 
         // Key Pressed
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent e) {
-                int dx = 0;
-                int dy = 0;
-
-                if (e.isAltDown())
-                    label.setText("Press Alt key");
-
-                if (e.isControlDown())
-                    label.setText("Press Control key");
-
-                if (e.isShiftDown())
-                    label.setText("Press Shift key");
-
-                label.setText("Press " + e.getCode().getName());
-
-                if (e.getCode() == KeyCode.UP)
-                    dy = -5;
-                else if (e.getCode() == KeyCode.DOWN)
-                    dy = 5;
-                else if (e.getCode() == KeyCode.LEFT)
-                    dx = -5;
-                else if (e.getCode() == KeyCode.RIGHT)
-                    dx = 5;
-                else if (e.getCode() == KeyCode.PAGE_UP)
-                    dy = -100;
-                else if (e.getCode() == KeyCode.PAGE_DOWN)
-                    dy = 100;
-
-                stage.setX(stage.getX() + dx);
-                stage.setY(stage.getY() + dy);
-            }
-        });
+        scene.setOnKeyPressed(onKeyPressedEventHandler);
 
         // Key Released
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent e) {
-                if (e.isAltDown())
-                    label.setText("Release Alt key");
-
-                if (e.isControlDown())
-                    label.setText("Release Control key");
-
-                if (e.isShiftDown())
-                    label.setText("Release Shift key");
-
-                label.setText("Release " + e.getCode().getName());
-            }
-        });
+        scene.setOnKeyReleased(onKeyReleasedEventHandler);
 
         // Key Typed
-        scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent e) {
-                if (e.isAltDown())
-                    label.setText("Type Alt key");
-
-                if (e.isControlDown())
-                    label.setText("Type Control key");
-
-                if (e.isShiftDown())
-                    label.setText("Type Shift key");
-
-                label.setText("Type " + e.getCode().getName());
-            }
-        });
+        scene.setOnKeyTyped(onKeyTypedEventHandler);
 
         // Set the title of Stage
         primaryStage.setTitle("Key Event Demo");
@@ -118,6 +57,76 @@ public class KeyEventDemo1 extends Application {
         // Show Stage
         primaryStage.show();
     }
+
+    // Key Pressed
+    EventHandler onKeyPressedEventHandler = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent e) {
+            int dx = 0;
+            int dy = 0;
+
+            if (e.isAltDown())
+                label.setText("Press Alt key");
+
+            if (e.isControlDown())
+                label.setText("Press Control key");
+
+            if (e.isShiftDown())
+                label.setText("Press Shift key");
+
+            label.setText("Press " + e.getCode().getName());
+
+            if (e.getCode() == KeyCode.UP)
+                dy = -5;
+            else if (e.getCode() == KeyCode.DOWN)
+                dy = 5;
+            else if (e.getCode() == KeyCode.LEFT)
+                dx = -5;
+            else if (e.getCode() == KeyCode.RIGHT)
+                dx = 5;
+            else if (e.getCode() == KeyCode.PAGE_UP)
+                dy = -100;
+            else if (e.getCode() == KeyCode.PAGE_DOWN)
+                dy = 100;
+
+            stage.setX(stage.getX() + dx);
+            stage.setY(stage.getY() + dy);
+        }
+    };
+
+    // Key Released
+    EventHandler onKeyReleasedEventHandler = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent e) {
+            if (e.isAltDown())
+                label.setText("Release Alt key");
+
+            if (e.isControlDown())
+                label.setText("Release Control key");
+
+            if (e.isShiftDown())
+                label.setText("Release Shift key");
+
+            label.setText("Release " + e.getCode().getName());
+        }
+    };
+
+    // Key Typed
+    EventHandler onKeyTypedEventHandler = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent e) {
+            if (e.isAltDown())
+                label.setText("Type Alt key");
+
+            if (e.isControlDown())
+                label.setText("Type Control key");
+
+            if (e.isShiftDown())
+                label.setText("Type Shift key");
+
+            label.setText("Type " + e.getCode().getName());
+        }
+    };
 
     /**
      * @param args the command line arguments
