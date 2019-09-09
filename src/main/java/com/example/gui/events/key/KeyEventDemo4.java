@@ -1,7 +1,6 @@
 package com.example.gui.events.key;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -37,73 +36,64 @@ public class KeyEventDemo4 extends Application {
         stage = primaryStage;
 
         // Key Pressed
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent e) {
-                int dx = 0;
-                int dy = 0;
+        scene.setOnKeyPressed((KeyEvent e) -> {
+            int dx = 0;
+            int dy = 0;
 
-                if (e.isAltDown())
-                    label.setText("Press Alt key");
+            if (e.isAltDown())
+                label.setText("Press Alt key");
 
-                if (e.isControlDown())
-                    label.setText("Press Control key");
+            if (e.isControlDown())
+                label.setText("Press Control key");
 
-                if (e.isShiftDown())
-                    label.setText("Press Shift key");
+            if (e.isShiftDown())
+                label.setText("Press Shift key");
 
-                label.setText("Press " + e.getCode().getName());
+            label.setText("Press " + e.getCode().getName());
 
-                if (e.getCode() == KeyCode.UP)
-                    dy = -5;
-                else if (e.getCode() == KeyCode.DOWN)
-                    dy = 5;
-                else if (e.getCode() == KeyCode.LEFT)
-                    dx = -5;
-                else if (e.getCode() == KeyCode.RIGHT)
-                    dx = 5;
-                else if (e.getCode() == KeyCode.PAGE_UP)
-                    dy = -100;
-                else if (e.getCode() == KeyCode.PAGE_DOWN)
-                    dy = 100;
+            if (e.getCode() == KeyCode.UP)
+                dy = -5;
+            else if (e.getCode() == KeyCode.DOWN)
+                dy = 5;
+            else if (e.getCode() == KeyCode.LEFT)
+                dx = -5;
+            else if (e.getCode() == KeyCode.RIGHT)
+                dx = 5;
+            else if (e.getCode() == KeyCode.PAGE_UP)
+                dy = -100;
+            else if (e.getCode() == KeyCode.PAGE_DOWN)
+                dy = 100;
 
-                stage.setX(stage.getX() + dx);
-                stage.setY(stage.getY() + dy);
-            }
+            stage.setX(stage.getX() + dx);
+            stage.setY(stage.getY() + dy);
         });
 
         // Key Released
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent e) {
-                if (e.isAltDown())
-                    label.setText("Release Alt key");
+        scene.setOnKeyReleased((KeyEvent e) -> {
+            if (e.isAltDown())
+                label.setText("Release Alt key");
 
-                if (e.isControlDown())
-                    label.setText("Release Control key");
+            if (e.isControlDown())
+                label.setText("Release Control key");
 
-                if (e.isShiftDown())
-                    label.setText("Release Shift key");
+            if (e.isShiftDown())
+                label.setText("Release Shift key");
 
-                label.setText("Release " + e.getCode().getName());
-            }
+            label.setText("Release " + e.getCode().getName());
         });
 
         // Key Typed
-        scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent e) {
-                if (e.isAltDown())
-                    label.setText("Type Alt key");
+        scene.setOnKeyTyped((KeyEvent e) -> {
+            if (e.isAltDown())
+                label.setText("Type Alt key");
 
-                if (e.isControlDown())
-                    label.setText("Type Control key");
+            if (e.isControlDown())
+                label.setText("Type Control key");
 
-                if (e.isShiftDown())
-                    label.setText("Type Shift key");
+            if (e.isShiftDown())
+                label.setText("Type Shift key");
 
-                label.setText("Type " + e.getCode().getName());
-            }
+            label.setText("Type " + e.getCode().getName());
         });
 
         // Set the title of Stage
