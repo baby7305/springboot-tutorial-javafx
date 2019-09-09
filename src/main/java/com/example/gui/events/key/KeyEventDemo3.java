@@ -37,7 +37,7 @@ public class KeyEventDemo3 extends Application {
         stage = primaryStage;
 
         // Key Pressed
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent e) {
                 int dx = 0;
@@ -73,7 +73,7 @@ public class KeyEventDemo3 extends Application {
         });
 
         // Key Released
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        scene.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent e) {
                 if (e.isAltDown())
@@ -90,7 +90,7 @@ public class KeyEventDemo3 extends Application {
         });
 
         // Key Typed
-        scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
+        scene.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent e) {
                 if (e.isAltDown())
