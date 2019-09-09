@@ -1,141 +1,82 @@
 package com.example.gui.events.drag;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.input.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /**
  * @author Leo Huang
  */
 public class DragEventDemo2 extends Application {
 
-    Text source, target;
-
-    DropShadow shadow = new DropShadow();
-
-    double orgSceneX, orgSceneY;
-    double orgTranslateX, orgTranslateY;
-
     @Override
     public void start(Stage primaryStage) {
 
-        source = new Text("Source");
-        source.setCursor(Cursor.HAND);
-        source.setFont(Font.font("Verdana", 16));
-        source.setFill(Color.DARKGREEN);
-        source.setTranslateX(50);
-        source.setTranslateY(50);
+        final TextArea textarea = new TextArea();
 
-        source.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                System.out.println("Source: Drag Detected");
+        textarea.setOnDragOver((DragEvent e) -> {
+            Dragboard db = e.getDragboard();
 
-                Dragboard dragboard = source.startDragAndDrop(TransferMode.ANY);
-
-                // Put a string to the Clipboard
-                ClipboardContent content = new ClipboardContent();
-                content.putString(source.getText());
-                dragboard.setContent(content);
-
+            if (e.getGestureSource() != textarea && db.hasFiles()) {
+                e.acceptTransferModes(TransferMode.COPY);
+            } else {
                 e.consume();
             }
         });
 
-        source.setOnDragDone(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Source: Drag Done");
+        textarea.setOnDragDropped((DragEvent e) -> {
+            Dragboard db = e.getDragboard();
+            boolean success = false;
 
-                if (e.getTransferMode() == TransferMode.MOVE) {
-                    source.setText("");
+            if (db.hasFiles()) {
+                success = true;
+
+                String filePath = db.getFiles().get(0).getAbsolutePath();
+
+                if (filePath.endsWith(".txt") || filePath.endsWith(".html") || filePath.endsWith(".java")) {
+                    Scanner filescanner;
+                    String text = "";
+
+                    try {
+                        filescanner = new Scanner(db.getFiles().get(0));
+
+                        while (filescanner.hasNext()) {
+                            text += filescanner.nextLine() + "\r\n";
+                        }
+
+                        filescanner.close();
+                    } catch (FileNotFoundException ex) {
+                        System.out.println(ex.toString());
+                    }
+
+                    textarea.setText(text);
                 }
-
-                e.consume();
             }
+
+            e.setDropCompleted(success);
+            e.consume();
         });
 
-        target = new Text("Target");
-        target.setFont(Font.font("Verdana", 16));
-        target.setFill(Color.BLUE);
-        target.setTranslateX(200);
-        target.setTranslateY(50);
-
-        target.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Target: Drag Over");
-
-                if (e.getGestureSource() != target && e.getDragboard().hasString()) {
-                    e.acceptTransferModes(TransferMode.ANY);
-                }
-
-                e.consume();
-            }
-        });
-
-        target.setOnDragEntered(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Target: Drag Entered");
-
-                target.setEffect(shadow);
-                target.setFill(Color.RED);
-                e.consume();
-            }
-        });
-
-        target.setOnDragExited(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Target: Drag Exited");
-
-                target.setEffect(null);
-                target.setFill(Color.BLUE);
-                e.consume();
-            }
-        });
-
-        target.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Target: Drag Dropped");
-
-                Dragboard dragboard = e.getDragboard();
-                boolean success = false;
-
-                if (dragboard.hasString()) {
-                    target.setText(dragboard.getString());
-                    success = true;
-                }
-
-                e.setDropCompleted(success);
-
-                e.consume();
-            }
-        });
-
-        Group group = new Group();
-        group.getChildren().addAll(source, target);
+        BorderPane borderpane = new BorderPane();
+        borderpane.setCenter(textarea);
 
         // Set the Layout Pane of Scene
-        Scene scene = new Scene(group);
+        Scene scene = new Scene(borderpane);
         // Set the title of Stage
         primaryStage.setTitle("Drag Event Demo");
         // Set the width of Stage
-        primaryStage.setWidth(300);
+        primaryStage.setWidth(250);
         // Set the height of Stage
-        primaryStage.setHeight(150);
+        primaryStage.setHeight(250);
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
 
         // Show Stage
         primaryStage.show();
