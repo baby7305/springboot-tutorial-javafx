@@ -1,15 +1,13 @@
 package com.example.gui.events.drag;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -17,123 +15,93 @@ import javafx.stage.Stage;
  */
 public class DragEventDemo1 extends Application {
 
-    Text source, target;
+    ImageView[] source = new ImageView[3];
+    ImageView target;
 
-    DropShadow shadow = new DropShadow();
-
-    double orgSceneX, orgSceneY;
-    double orgTranslateX, orgTranslateY;
+    Image empty = new Image(getClass().getResourceAsStream("/events/images/empty.png"));
+    Image full = new Image(getClass().getResourceAsStream("/events/images/full.png"));
 
     @Override
     public void start(Stage primaryStage) {
 
-        source = new Text("Source");
-        source.setCursor(Cursor.HAND);
-        source.setFont(Font.font("Verdana", 16));
-        source.setFill(Color.DARKGREEN);
-        source.setTranslateX(50);
-        source.setTranslateY(50);
+        Group group = new Group();
 
-        source.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                System.out.println("Source: Drag Detected");
+        for (int i = 0; i < source.length; i++) {
+            source[i] = new ImageView(new Image(getClass().getResourceAsStream("/events/images/file" + (i + 1) + ".png")));
+            source[i].setCursor(Cursor.HAND);
+            source[i].setTranslateX(i * 85 + 5);
+            source[i].setTranslateY(5);
 
-                Dragboard dragboard = source.startDragAndDrop(TransferMode.ANY);
+            group.getChildren().add(source[i]);
 
-                // Put a string to the Clipboard
+            source[i].setOnDragDetected((MouseEvent e) -> {
+                ImageView imageview = (ImageView) e.getSource();
+
+                Dragboard dragboard = imageview.startDragAndDrop(TransferMode.ANY);
+
+                // Put an image to the Clipboard
                 ClipboardContent content = new ClipboardContent();
-                content.putString(source.getText());
+                content.putImage(imageview.getImage());
                 dragboard.setContent(content);
 
                 e.consume();
-            }
-        });
+            });
 
-        source.setOnDragDone(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Source: Drag Done");
-
+            source[i].setOnDragDone((DragEvent e) -> {
                 if (e.getTransferMode() == TransferMode.MOVE) {
-                    source.setText("");
+                    ImageView imageview = (ImageView) e.getSource();
+                    imageview.setVisible(false);
                 }
 
                 e.consume();
+            });
+        }
+
+        target = new ImageView(empty);
+        target.setTranslateX(320);
+        target.setTranslateY(100);
+        target.setOnDragOver((DragEvent e) -> {
+            if (e.getGestureSource() != target && e.getDragboard().hasImage()) {
+                e.acceptTransferModes(TransferMode.ANY);
             }
+
+            e.consume();
         });
 
-        target = new Text("Target");
-        target.setFont(Font.font("Verdana", 16));
-        target.setFill(Color.BLUE);
-        target.setTranslateX(200);
-        target.setTranslateY(50);
+        target.setOnDragDropped((DragEvent e) -> {
+            Dragboard dragboard = e.getDragboard();
+            boolean success = false;
 
-        target.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Target: Drag Over");
-
-                if (e.getGestureSource() != target && e.getDragboard().hasString()) {
-                    e.acceptTransferModes(TransferMode.ANY);
-                }
-
-                e.consume();
+            if (dragboard.hasImage()) {
+                target.setImage(full);
+                success = true;
             }
+
+            e.setDropCompleted(success);
+
+            e.consume();
         });
 
-        target.setOnDragEntered(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Target: Drag Entered");
-
-                target.setEffect(shadow);
-                target.setFill(Color.RED);
-                e.consume();
-            }
+        target.setOnDragEntered((DragEvent e) -> {
+            target.setEffect(new DropShadow());
+            e.consume();
         });
 
-        target.setOnDragExited(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Target: Drag Exited");
-
-                target.setEffect(null);
-                target.setFill(Color.BLUE);
-                e.consume();
-            }
+        target.setOnDragExited((DragEvent e) -> {
+            target.setEffect(null);
+            e.consume();
         });
 
-        target.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent e) {
-                System.out.println("Target: Drag Dropped");
-
-                Dragboard dragboard = e.getDragboard();
-                boolean success = false;
-
-                if (dragboard.hasString()) {
-                    target.setText(dragboard.getString());
-                    success = true;
-                }
-
-                e.setDropCompleted(success);
-
-                e.consume();
-            }
-        });
-
-        Group group = new Group();
-        group.getChildren().addAll(source, target);
+        group.getChildren().add(target);
 
         // Set the Layout Pane of Scene
         Scene scene = new Scene(group);
         // Set the title of Stage
         primaryStage.setTitle("Drag Event Demo");
         // Set the width of Stage
-        primaryStage.setWidth(300);
+        primaryStage.setWidth(450);
         // Set the height of Stage
-        primaryStage.setHeight(150);
+        primaryStage.setHeight(250);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
 
