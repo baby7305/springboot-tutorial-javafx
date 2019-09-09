@@ -2,12 +2,11 @@ package com.example.gui.events.mouse;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -15,68 +14,46 @@ import javafx.stage.Stage;
  */
 public class MouseEventDemo3 extends Application {
 
-    Label label = new Label();
+    ImageView imageview;
+
+    double orgSceneX, orgSceneY;
+    double orgTranslateX, orgTranslateY;
 
     @Override
     public void start(Stage primaryStage) {
 
-        HBox hbox = new HBox();
-        hbox.setPadding(new Insets(0, 0, 0, 5));
-        hbox.getChildren().add(label);
-
-        BorderPane borderpane = new BorderPane();
-        borderpane.setBottom(hbox);
-
-        // Set the Layout Pane of Scene
-        Scene scene = new Scene(borderpane);
-
-        // Mouse Clicked
-        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                label.setText("Mouse Clicked: " + e.getButton());
-            }
-        });
-
-        // Mouse Entered
-        scene.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                label.setText("Mouse Entered: X: " + e.getX() + ", Y: " + e.getY());
-            }
-        });
-
-        // Mouse Exited
-        scene.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                label.setText("Mouse Exited: X: " + e.getX() + ", Y: " + e.getY());
-            }
-        });
-
-        // Mouse Moved
-        scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                label.setText("Mouse Moved: X: " + e.getX() + ", Y: " + e.getY());
-            }
-        });
+        imageview = new ImageView(new Image(getClass().getResourceAsStream("/events/images/duke.gif")));
 
         // Mouse Pressed
-        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+        imageview.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                label.setText("Mouse Pressed: " + e.getButton());
+                orgSceneX = e.getSceneX();
+                orgSceneY = e.getSceneY();
+                orgTranslateX = ((ImageView) (e.getSource())).getTranslateX();
+                orgTranslateY = ((ImageView) (e.getSource())).getTranslateY();
             }
         });
 
-        // Mouse Released
-        scene.setOnMouseReleased(new EventHandler<MouseEvent>() {
+        // Mouse Dragged
+        imageview.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                label.setText("Mouse Released: " + e.getButton());
+                double offsetX = e.getSceneX() - orgSceneX;
+                double offsetY = e.getSceneY() - orgSceneY;
+                double newTranslateX = orgTranslateX + offsetX;
+                double newTranslateY = orgTranslateY + offsetY;
+
+                ((ImageView) (e.getSource())).setTranslateX(newTranslateX);
+                ((ImageView) (e.getSource())).setTranslateY(newTranslateY);
             }
         });
+
+        Group group = new Group();
+        group.getChildren().add(imageview);
+
+        // Set the Layout Pane of Scene
+        Scene scene = new Scene(group);
 
         // Set the title of Stage
         primaryStage.setTitle("Mouse Event Demo");
